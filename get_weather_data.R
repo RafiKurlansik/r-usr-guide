@@ -16,7 +16,7 @@ get_weather_forecast <- function(lat, lon, trip_date) {
 
 get_weather_data <- function(df, trip_date) {
  
-  purrr::pmap(df, function(lat, lon, park, description) {
+  purrr::pmap(df, function(lat, lon, Park, Description) {
 
     # get forecast and create tibble
     forecast <- get_weather_forecast(lat, lon, trip_date = trip_date) |>
@@ -26,8 +26,8 @@ get_weather_data <- function(df, trip_date) {
 
     # return forecast
     tibble::tibble(
-      park = park,
-      description = description,
+      Park = Park,
+      Description = Description,
       lat = lat, 
       lon = lon,
       forecast = list(forecast)
