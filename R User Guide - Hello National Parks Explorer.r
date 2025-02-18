@@ -119,7 +119,8 @@ source("./get_weather_data.R")
 # COMMAND ----------
 
 # Pass the parks_df to look up weather for the park coordinates on the trip date
-weather_data <- get_weather_data(parks_df, trip_date = '2024-05-24')
+# The trip date used is yesterday, you can test with a custom date in the following format : '2024-05-24'
+weather_data <- get_weather_data(parks_df, trip_date=Sys.Date()-1) 
 display(weather_data)
 
 # COMMAND ----------
@@ -284,6 +285,7 @@ weather_data <- get_weather_data(parks_df, trip_date = date)
 # MAGIC We can use any 3rd party or custom R package with Databricks, and many of the most [popular ones](https://docs.databricks.com/en/release-notes/runtime/14.3lts.html#installed-r-libraries) are already available as part of [Databricks Runtime](https://docs.databricks.com/en/release-notes/runtime/index.html).  In the next cell, we prepare our forecast data using `dplyr`.  The `park_forecast` dataframe has everything we need to create an interactive visualization. 
 
 # COMMAND ----------
+library(dplyr)
 
 # Summarize weather data from hourly to daily, with min-max temps and precipitation probability
 park_forecast <- weather_data %>% 
