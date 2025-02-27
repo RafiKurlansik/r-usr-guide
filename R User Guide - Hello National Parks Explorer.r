@@ -56,7 +56,7 @@ get_park_data <- function(state_code, api_key) {
 
 # Define our params
 state_code <- "NJ"
-api_key <- "p7clhoZuhan8llTbc6IB4XfuA7Wit2PXDG48mxts"
+api_key <- "<insert api key>"
 
 # Pass them to our function and retrieve the data 
 parks_df <- get_park_data(state_code=state_code, api_key=api_key)
