@@ -109,6 +109,11 @@ display(parks_df)
 
 # COMMAND ----------
 
+# MAGIC %md
+# MAGIC Note that if you are attached to _Dedicated_ compute as part of a _group_, you will need to grant permissions on the catalog and workspace folder in order to source the file. If you are using personal compute or Dedicated compute for a single user, the code should work without any permission modifications.
+
+# COMMAND ----------
+
 source("./get_weather_data.R")
 
 # COMMAND ----------
