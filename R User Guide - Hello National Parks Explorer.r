@@ -56,7 +56,7 @@ get_park_data <- function(state_code, api_key) {
 
 # Define our params
 state_code <- "NJ"
-api_key <- "<insert_key_here>"
+api_key <- "p7clhoZuhan8llTbc6IB4XfuA7Wit2PXDG48mxts"
 
 # Pass them to our function and retrieve the data 
 parks_df <- get_park_data(state_code=state_code, api_key=api_key)
@@ -161,7 +161,7 @@ table_name <- "users.rafi_kurlansik.weather_data"
 
 # Connect to Spark and copy our R data.frame to a Spark DataFrame
 sc <- spark_connect(method = "databricks")
-weather_data_sdf <- copy_to(sc, weather_data)
+weather_data_sdf <- copy_to(sc, weather_data, overwrite = TRUE)
 
 # Save the Spark DataFrame as a table in UC
 spark_write_table(
@@ -285,6 +285,11 @@ weather_data <- get_weather_data(parks_df, trip_date = date)
 # MAGIC We can use any 3rd party or custom R package with Databricks, and many of the most [popular ones](https://docs.databricks.com/en/release-notes/runtime/14.3lts.html#installed-r-libraries) are already available as part of [Databricks Runtime](https://docs.databricks.com/en/release-notes/runtime/index.html).  In the next cell, we prepare our forecast data using `dplyr`.  The `park_forecast` dataframe has everything we need to create an interactive visualization. 
 
 # COMMAND ----------
+
+display(weather_data)
+
+# COMMAND ----------
+
 library(dplyr)
 
 # Summarize weather data from hourly to daily, with min-max temps and precipitation probability
@@ -294,8 +299,8 @@ park_forecast <- weather_data %>%
     date = as.Date(timestamp)) %>% 
   group_by(date, Park, Description, lat, lon) %>% 
   summarize(
-    min_tmp = round(min((temperature*9/5)+32)), 
-    max_tmp = round(max((temperature*9/5)+32)),
+    min_tmp = round(min((temperature_2m*9/5)+32)), 
+    max_tmp = round(max((temperature_2m*9/5)+32)),
     precipitation = max(precipitation), 
     precip_prob = paste0(max(precipitation_probability), "%")) %>%
   mutate(
